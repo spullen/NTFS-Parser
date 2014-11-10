@@ -1,0 +1,4 @@
+rootProject.name = 'NTFS-Parser'
+include ':parser'
+include ':utility'
+
