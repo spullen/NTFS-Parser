@@ -14,17 +14,20 @@ public class FileReader {
      * @param filename
      * @return b byte[]
      */
-    public static byte[] seekAndRead(byte[] b, int offset, String filename) {
-        File file = null;
+    public static void seekAndRead(byte[] b, int offset, String filename) throws IOException {
         RandomAccessFile raf = null;
         try {
-            file = new File(filename);
-            raf = new RandomAccessFile(file, "r");
+            raf = new RandomAccessFile(new File(filename), "r");
             raf.seek((long) offset); // set the file pointer to the offset
             raf.readFully(b); // read in the bytes from where the file pointer is
-        } catch (IOException ioe) {
-            System.out.println("Error: " + ioe.toString());
+        } finally {
+            if (raf != null){
+                try {
+                    raf.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-        return b; // return the bytes read in
     }
 }
